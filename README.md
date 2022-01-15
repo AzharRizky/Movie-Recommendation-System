@@ -95,7 +95,7 @@ Untuk menyelesaikan masalah ini, penulis akan menggunakan 2 solusi algoritma yai
   Terlihat pada grafik, bahwa film yang memiliki _rating_ tertinggi adalah **Forrest Gump** yang rilis pada tahun 1994
 
 ## Data Preparation
-Berikut ini merupakan tahapan-tahapan dalam melakukan pra-pemrosesan data:
+Data preparation diperlukan untuk mempersiapkan data agar ketika nanti dilakukan proses pengembangan model diharapkan akurasi model akan semakin baik dan meminimalisir terjadinya bias pada data. Berikut ini merupakan tahapan-tahapan dalam melakukan pra-pemrosesan data:
  - **Melakukan Penanganan _Missing Value_**
     <br> Penanganan yang penulis lakukan pada _missing value_ yaitu dengan melakukan drop data. Tetapi karena dataset yang digunakan cukup bersih, _missing value_ hanya terdapat ketika proses penggabungan dataset.
  
@@ -120,10 +120,27 @@ Untuk menghitung derajat kesamaan (_similarity degree_) antar movie, penulis men
 
 Langkah selanjutnya yaitu menggunakan _argpartition_ untuk mengambil sejumlah nilai k tertinggi dari _similarity_ data kemudian mengambil data dari bobot (tingkat kesamaan) tertinggi ke terendah. Kemudian menguji akurasi dari sistem rekomendasi ini untuk menemukan rekomendasi movies yang mirip dari film yang ingin dicari.
 
+- Kelebihan
+  - Semakin banyak informasi yang diberikan pengguna, semakin baik akurasi sistem rekomendasi.
+
+- Kekurangan
+  - Hanya dapat digunakan untuk fitur yang sesuai, seperti film, dan buku.
+  - Tidak mampu menentukan profil dari user baru.
+
+
 ### Collaborative Filtering
 Pada modeling `Collaborative Filtering` penulis menggunakan data hasil gabungan dari dua datasets yaitu *movies.csv* & *ratings.csv*. Langkah pertama adalah melakukan _encode_ data `userId` & `movieId` setelah di _encode_ lakukan _mapping_ ke dalam data yang digunakan dan juga mengubah nilai _rating_ menjadi _float_. Selanjutnya ialah membagi data untuk _training_ sebesar 80% dan validasi sebesar 20%.
 
 Lakukan proses _embedding_ terhadap data film dan pengguna. Lalu lakukan operasi perkalian _dot product_ antara _embedding_ pengguna dan film. Selain itu, penulis juga menambahkan bias untuk setiap pengguna dan film. Skor kecocokan ditetapkan dalam skala [0,1] dengan fungsi aktivasi _sigmoid_. Untuk mendapatkan rekomendasi film, penulis mengambil sampel user secara acak dan mendefinisikan variabel _movie_not_watched_ yang merupakan daftar film yang belum pernah ditonton oleh pengguna.
+
+- Kelebihan
+  - Tidak memerlukan atribut untuk setiap itemnya.
+  - Dapat membuat rekomendasi tanpa harus selalu menggunakan dataset yang lengkap.
+  - Unggul dari segi kecepatan dan skalabilitas.
+  - Rekomendasi tetap akan berkerja dalam keadaan dimana konten sulit dianalisi sekalipun
+
+- Kekurangan
+  - Membutuhkan parameter rating, sehingga jika ada item baru sistem tidak akan merekomendasikan item tersebut.
 
 ## Evaluation
 Pada tahap ini, penulis menggunakan _Mean Absolute Error (MAE)_ dan _Root Mean Squared Error (RMSE)_ sebagai metrik evaluasi. Berikut penjelasannya:
