@@ -162,8 +162,22 @@ Berikut ini adalah hasil rekomendasi film tertinggi terhadap user 606:
 ![Content Based Filtering](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/cf.png)
 
 ## Evaluation
-Pada tahap ini, penulis menggunakan _Mean Absolute Error (MAE)_ dan _Root Mean Squared Error (RMSE)_ sebagai metrik evaluasi. Berikut penjelasannya:
+Evaluasi yang akan penulis lakukan disini yaitu evaluasi dengan Mean Absolute Error (MAE) dan Root Mean Squared Error (RMSE) pada Collaborative Filtering dan Precision Content Based Filtering
 
+### Content Based Filtering
+Pada evaluasi model ini penulis menggunakan metrik precision content based filtering untuk menghitung precision model sistem telah dibuat sebelumnya. Berikut ini adalah hasil analisisnya:
+
+Precision Metric Formula:
+
+![Precision Formula](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/precision_formula.png)
+
+Precision Metric Test:
+
+![Precision Content Based Filtering](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/precision.png)
+
+Langkah pertama adalah melakukan pengecekan data film berdasarkan title. Dapat dilihat bahwa judul film Outbreak (1995) memiliki 4 genre yaitu Action, Drama, Sci-Fi, dan Thriller. Lalu dari hasil rekomendasi di atas, diketahui bahwa Outbreak (1995) memiliki 4 genre. Dari 10 item yang direkomendasikan, 8 item memiliki kategori 4 genre yang sama (similar). Artinya, precision sistem kita sebesar 8/10 atau sebesar 80%.
+
+### Collaborative Filtering
 | _Mean Absolute Error (MAE)_ | _Root Mean Squared Error (RMSE)_ |
 | --------------------------- | -------------------------------- |
 | Mengukur besarnya rata-rata kesalahan dalam serangkaian prediksi yang sudah dilatih kepada data yang akan dites, tanpa mempertimbangkan arahnya. Semakin rendah nilai MAE (_Mean Absolute Error_) maka semakin baik dan akurat model yang dibuat. | Adalah aturan penilaian kuadrat yang juga mengukur besarnya rata-rata kesalahan. Sama seperti MAE, semakin rendahnya nilai _root mean square error_ juga menandakan semakin baik model tersebut dalam melakukan prediksi. |
@@ -171,6 +185,6 @@ Pada tahap ini, penulis menggunakan _Mean Absolute Error (MAE)_ dan _Root Mean S
 | ![MAE](https://gisgeography.com/wp-content/uploads/2014/08/mae-formula.png) | ![RMSE](https://1.bp.blogspot.com/-MM7g3UQjW9s/X8JzKPlxfQI/AAAAAAAACX0/zNDQCP4CJWANa1Bh_zBoLBCCOuUnCXKigCPcBGAYYCw/s16000/Rumus%2BRMSE.jpg) |
 | Visualisasi _Mean Absolute Error (MAE)_ | Visualisasi _Root Mean Squared Error (RMSE)_ |
 | ![Plot MAE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/mae.png) | ![Plot RMSE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/rmse.png) |
-| Berdasarkan hasil _fitting_ nilai konvergen metrik MAE berada pada 0.1319 untuk training dan 0.1450 untuk validasi. | Berdasarkan hasil _fitting_ nilai konvergen metrik RMSE berada pada 0.1718 untuk training dan 0.1881 untuk validasi. |
+| Berdasarkan hasil _fitting_ nilai konvergen metrik MAE berada sedikit dibawah 0.135 untuk training dan sedikit diatas 0.1450 untuk validasi. | Berdasarkan hasil _fitting_ nilai konvergen metrik RMSE berada sedikit diatas 0.170 untuk training dan sedikit dibawah 0.190 untuk validasi. |
 
 Untuk menghasilkan nilai yang konvergen proses `fitting` memerlukan 15 _epoch_. Dari hasil perhitungan kedua metrik diatas dapat disimpulkan bahwa model ini memiliki tingkat eror di bawah 20%.
