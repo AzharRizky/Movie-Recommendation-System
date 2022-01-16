@@ -107,6 +107,12 @@ Data preparation diperlukan untuk mempersiapkan data agar ketika nanti dilakukan
 
  - **Melakukan penggabungan Data**
     <br> Melakukan penggabungan data yang sudah diolah sebelumnya untuk membangun model. lalu menghapus data yang memiliki _missing value_ pada variabel genre dan melihat jumlah data setelah digabungkan, terlihat data memiliki 100830 baris dengan 5 kolom.
+    
+ - **Melakukan Normalisasi Nilai Rating**
+    <br> Untuk menghasilkan rekomendasi yang sesuai dan akurat maka pada tahap ini diperlukan sebuah normalisasi pada data nilai _rating_ dengan menggunakan formula MinMax pada data rating sebelum memasuki tahap modelling.
+    
+ - **Melakukan Splitting Dataset**
+    <br> Untuk melatih model maka penulis perlu melakukan pembagian dataset latih dan juga dataset validasi, untuk dataset latih penulis berikan 80% dari total keseluruhan jumlah data sedangkan dataset validasi sebesar 20% dari keseluruhan data. Hal ini diperlukan untuk pengembangan pada model _Collaborative Filtering_ nantinya.
 
 ## Modeling and Result
 Pada proyek ini, Proses modeling dalam proyek ini menggunakan metode *Neural Network* dan *Cosine Similarity*. Model *Deep Learning* akan penulis gunakan untuk Sistem Rekomendasi berbasis `Collaborative Filtering` yang mana model ini akan menghasilkan rekomendasi untuk satu pengguna. *Cosine Similarity* akan penulis gunakan untuk Sistem Rekomendasi berbasis `Content-Based Filtering` yang akan menghitung kemiripan antara satu film dengan lainnya berdasarkan fitur yang terdapat pada satu film. Berikut penjelasan tahapannya:
@@ -127,6 +133,15 @@ Langkah selanjutnya yaitu menggunakan _argpartition_ untuk mengambil sejumlah ni
   - Hanya dapat digunakan untuk fitur yang sesuai, seperti film, dan buku.
   - Tidak mampu menentukan profil dari user baru.
 
+Berikut ini adalah konten yang dijadikan referensi untuk menentukan 10 rekomendasi film tertinggi yang memiliki kesamaan genre yang sama:
+
+![Content Based Filtering Data Uji](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/cek_film.png)
+
+Terlihat pada tabel diatas bahwasannya saya akan menguji coba model berdasarkan judul film "Daddy Day Care (2003)" dengan genre Children & Comedy.
+
+Berikut ini adalah hasil rekomendasi tertinggi dari model _Content Based Filtering_ berdasarkan referensi film diatas:
+
+![Content Based Filtering](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/cbf.png)
 
 ### Collaborative Filtering
 Pada modeling `Collaborative Filtering` penulis menggunakan data hasil gabungan dari dua datasets yaitu *movies.csv* & *ratings.csv*. Langkah pertama adalah melakukan _encode_ data `userId` & `movieId` setelah di _encode_ lakukan _mapping_ ke dalam data yang digunakan dan juga mengubah nilai _rating_ menjadi _float_. Selanjutnya ialah membagi data untuk _training_ sebesar 80% dan validasi sebesar 20%.
@@ -142,31 +157,20 @@ Lakukan proses _embedding_ terhadap data film dan pengguna. Lalu lakukan operasi
 - Kekurangan
   - Membutuhkan parameter rating, sehingga jika ada item baru sistem tidak akan merekomendasikan item tersebut.
 
+Berikut ini adalah hasil rekomendasi film tertinggi terhadap user 606:
+
+![Content Based Filtering](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/cf.png)
+
 ## Evaluation
 Pada tahap ini, penulis menggunakan _Mean Absolute Error (MAE)_ dan _Root Mean Squared Error (RMSE)_ sebagai metrik evaluasi. Berikut penjelasannya:
 
-1. _Mean Absolute Error (MAE)_ mengukur besarnya rata-rata kesalahan dalam serangkaian prediksi yang sudah dilatih kepada data yang akan dites, tanpa mempertimbangkan arahnya. Semakin rendah nilai MAE (_Mean Absolute Error_) maka semakin baik dan akurat model yang dibuat.
+| _Mean Absolute Error (MAE)_ | _Root Mean Squared Error (RMSE)_ |
+| --------------------------- | -------------------------------- |
+| Mengukur besarnya rata-rata kesalahan dalam serangkaian prediksi yang sudah dilatih kepada data yang akan dites, tanpa mempertimbangkan arahnya. Semakin rendah nilai MAE (_Mean Absolute Error_) maka semakin baik dan akurat model yang dibuat. | Adalah aturan penilaian kuadrat yang juga mengukur besarnya rata-rata kesalahan. Sama seperti MAE, semakin rendahnya nilai _root mean square error_ juga menandakan semakin baik model tersebut dalam melakukan prediksi. |
+| Formula _Mean Absolute Error (MAE)_ | Formula _Root Mean Squared Error (RMSE)_ |
+| ![MAE](https://gisgeography.com/wp-content/uploads/2014/08/mae-formula.png) | ![RMSE](https://1.bp.blogspot.com/-MM7g3UQjW9s/X8JzKPlxfQI/AAAAAAAACX0/zNDQCP4CJWANa1Bh_zBoLBCCOuUnCXKigCPcBGAYYCw/s16000/Rumus%2BRMSE.jpg) |
+| Visualisasi _Mean Absolute Error (MAE)_ | Visualisasi _Root Mean Squared Error (RMSE)_ |
+| ![Plot MAE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/mae.png) | ![Plot RMSE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/rmse.png) |
+| Berdasarkan hasil _fitting_ nilai konvergen metrik MAE berada pada 0.1319 untuk training dan 0.1450 untuk validasi. | Berdasarkan hasil _fitting_ nilai konvergen metrik RMSE berada pada 0.1718 untuk training dan 0.1881 untuk validasi. |
 
-    Berikut ini adalah rumus MAE:
-
-    ![MAE](https://gisgeography.com/wp-content/uploads/2014/08/mae-formula.png)
-
-    Berikut visualisasi dari _fitting_ menggunakan metrik MAE:
-
-    ![Plot MAE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/mae.png)
-
-    Berdasarkan hasil _fitting_ nilai konvergen metrik MAE berada pada 0.1319 untuk training dan 0.1450 untuk validasi.
-
-2. _Root Mean Squared Error (RMSE)_ adalah aturan penilaian kuadrat yang juga mengukur besarnya rata-rata kesalahan. Sama seperti MAE, semakin rendahnya nilai _root mean square error_ juga menandakan semakin baik model tersebut dalam melakukan prediksi.
-
-    Berikut ini adalah rumus RMSE:
-
-    ![RMSE](https://1.bp.blogspot.com/-MM7g3UQjW9s/X8JzKPlxfQI/AAAAAAAACX0/zNDQCP4CJWANa1Bh_zBoLBCCOuUnCXKigCPcBGAYYCw/s16000/Rumus%2BRMSE.jpg)
-
-    Berikut visualisasi dari _fitting_ menggunakan metrik RMSE:
-
-    ![Plot RMSE](https://raw.githubusercontent.com/AzharRizky/Movie-Recommendation-System/main/images/rmse.png)
-
-    Berdasarkan hasil _fitting_ nilai konvergen metrik RMSE berada pada 0.1718 untuk training dan 0.1881 untuk validasi.
-
-    Untuk menghasilkan nilai yang konvergen proses `fitting` memerlukan 15 _epoch_. Dari hasil perhitungan kedua metrik diatas dapat disimpulkan bahwa model ini memiliki tingkat eror di bawah 20%.
+Untuk menghasilkan nilai yang konvergen proses `fitting` memerlukan 15 _epoch_. Dari hasil perhitungan kedua metrik diatas dapat disimpulkan bahwa model ini memiliki tingkat eror di bawah 20%.
